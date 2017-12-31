@@ -1,0 +1,55 @@
+#######################################
+# Class
+#######################################
+
+ESP8266EX	KEYWORD1
+
+#######################################
+# Methods and Functions
+#######################################
+
+flushInput	KEYWORD2
+indexof			KEYWORD2
+indexOfBackwards	KEYWORD2
+stringCompare		KEYWORD2
+stringFind	KEYWORD2
+remove_spaces			KEYWORD2
+readline			KEYWORD2
+
+getReply			KEYWORD2
+sendCheckReply			KEYWORD2
+expectReply			KEYWORD2
+expectReplyMulti			KEYWORD2
+findReply			KEYWORD2
+setBootMarker			KEYWORD2
+hardReset			KEYWORD2
+softReset			KEYWORD2
+setModuleEcho			KEYWORD2
+getVersion			KEYWORD2
+setWifiMode			KEYWORD2
+setConnectionMode			KEYWORD2
+connectToAP			KEYWORD2
+waitForIP			KEYWORD2
+getIP			KEYWORD2
+connectTCP			KEYWORD2
+tcpConnected			KEYWORD2
+tcpSendRequest			KEYWORD2
+requestURL			KEYWORD2
+closeAP			KEYWORD2
+closeAP			KEYWORD2
+closeTCP  KEYWORD2
+
+setUbidotsToken			KEYWORD2
+setUbidotsURL			KEYWORD2
+setVariablesNames			KEYWORD2
+ubidotsGetRequest			KEYWORD2
+ubidotsPostRequest			KEYWORD2
+ubidotsPostResponse			closeTCP
+
+#######################################
+# Constants
+#######################################
+
+STATION_MODE		LITERAL1
+SINGLE_CONNECTION		LITERAL1
+replybuffer		LITERAL1
