@@ -290,11 +290,18 @@ boolean ESP8266EX::setConnectionMode(char mode) {
 boolean ESP8266EX::connectToAP(char *ssid, char *pass) {
   debugStream->println(F("\nConnecting to WiFi AP"));
 
-  char connectCmd[100] = "";
-  String connectWifiCmd = "AT+CWJAP_DEF=\"" + String(ssid) + "\",\"" + String(pass) + "\"";
-  connectWifiCmd.toCharArray(connectCmd, connectWifiCmd.length() + 1);
+  // char connectCmd[100] = "";
+  // String connectWifiCmd = "AT+CWJAP_DEF=\"" + String(ssid) + "\",\"" + String(pass) + "\"";
+  // connectWifiCmd.toCharArray(connectCmd, connectWifiCmd.length() + 1);
 
-  if (!sendCheckReply(connectCmd, "WIFI CONNECTED", 7000)) {
+  print("AT+CWJAP_DEF=\"");
+  print(ssid);
+  print("\",\"");
+  print(pass);
+  println("\"");
+
+  // if (!sendCheckReply(connectCmd, "WIFI CONNECTED", 7000)) {
+  if (!expectReplyMulti("WIFI CONNECTED", 7000)) {
     debugStream->println(F("Wifi connect error"));
     return false;
   }
