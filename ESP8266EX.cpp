@@ -301,7 +301,7 @@ boolean ESP8266EX::connectToAP(char *ssid, char *pass) {
   println("\"");
 
   // if (!sendCheckReply(connectCmd, "WIFI CONNECTED", 7000)) {
-  if (!expectReplyMulti("WIFI CONNECTED", 7000)) {
+  if (!expectReplyMulti("WIFI CONNECTED", 10)) {
     debugStream->println(F("Wifi connect error"));
     return false;
   }
@@ -431,10 +431,15 @@ void ESP8266EX::setUbidotsURL(char *url) {
   _ubidotsUrl = url;
 }
 
-void ESP8266EX::setVariablesNames(char *var1, char *var2, char *var3) {
+void ESP8266EX::setDeviceName(char *device) {
+  _ubidotsDevice = device;
+}
+
+void ESP8266EX::setVariablesNames(char *var1, char *var2, char *var3, char *var4) {
   _ubidotsVar1 = var1;
   _ubidotsVar2 = var2;
   _ubidotsVar3 = var3;
+  _ubidotsVar4 = var4;
 }
 
 
@@ -467,12 +472,13 @@ boolean ESP8266EX::ubidotsGetRequest(char *url, char *auth) {
 }
 
 // Send a POST request to Ubidots server
-boolean ESP8266EX::ubidotsPostRequest(char *device, char *value1, char *value2, char *value3) {
-  char variableString[50];
-  sprintf(variableString, "{\"%s\": %s, \"%s\": %s, \"%s\": %s}",
-                          _ubidotsVar1, value1, _ubidotsVar2, value2, _ubidotsVar3, value3);
+boolean ESP8266EX::ubidotsPostRequest(char *value1, char *value2, char *value3, char *value4) {
+  char variableString[60];
+  sprintf(variableString, "{\"%s\": %s, \"%s\": %s, \"%s\": %s, \"%s\": %s}",
+                          _ubidotsVar1, value1, _ubidotsVar2, value2,
+                          _ubidotsVar3, value3, _ubidotsVar4, value4);
 
-  int requestLength = 86 + strlen(_ubidotsUrl) + strlen(device) +
+  int requestLength = 86 + strlen(_ubidotsUrl) + strlen(_ubidotsDevice) +
                           strlen(_ubidotsToken) + strlen(_host) +
                           strlen(variableString);
 
@@ -481,7 +487,7 @@ boolean ESP8266EX::ubidotsPostRequest(char *device, char *value1, char *value2, 
 
   print(F("POST "));
   print(_ubidotsUrl);
-  print(device);
+  print(_ubidotsDevice);
   print(F("/?token="));
   print(_ubidotsToken);
   print(F(" HTTP/1.1\r\nHost: "));

@@ -84,9 +84,10 @@ class ESP8266EX : public Print {
     // UBIDOTS METHODS
     void setUbidotsToken(char *token);
     void setUbidotsURL(char *url);
-    void setVariablesNames(char *var1, char *var2, char *var3);
+    void setDeviceName(char *device);
+    void setVariablesNames(char *var1, char *var2, char *var3, char *var4);
     boolean ubidotsGetRequest(char *url, char *auth);
-    boolean ubidotsPostRequest(char *device, char *value1, char *value2, char *value3);
+    boolean ubidotsPostRequest(char *value1, char *value2, char *value3, char *value4);
     boolean ubidotsPostResponse();
 
   private:
@@ -100,7 +101,8 @@ class ESP8266EX : public Print {
     char _bootMarker[50]; // String indicating successful boot
     char *_ubidotsToken;
     char *_ubidotsUrl;
-    char *_ubidotsVar1, *_ubidotsVar2, *_ubidotsVar3;
+    char *_ubidotsDevice;
+    char *_ubidotsVar1, *_ubidotsVar2, *_ubidotsVar3, *_ubidotsVar4;
 };
 
 #endif // _ESP8266EX_H_
