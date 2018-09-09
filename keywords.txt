@@ -44,7 +44,7 @@ setUbidotsURL			KEYWORD2
 setVariablesNames			KEYWORD2
 ubidotsGetRequest			KEYWORD2
 ubidotsPostRequest			KEYWORD2
-ubidotsPostResponse			closeTCP
+ubidotsPostResponse			KEYWORD2
 
 #######################################
 # Constants
