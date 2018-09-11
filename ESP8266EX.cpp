@@ -290,17 +290,12 @@ boolean ESP8266EX::setConnectionMode(char mode) {
 boolean ESP8266EX::connectToAP(char *ssid, char *pass) {
   debugStream->println(F("\nConnecting to WiFi AP"));
 
-  // char connectCmd[100] = "";
-  // String connectWifiCmd = "AT+CWJAP_DEF=\"" + String(ssid) + "\",\"" + String(pass) + "\"";
-  // connectWifiCmd.toCharArray(connectCmd, connectWifiCmd.length() + 1);
-
   print("AT+CWJAP_DEF=\"");
   print(ssid);
   print("\",\"");
   print(pass);
   println("\"");
 
-  // if (!sendCheckReply(connectCmd, "WIFI CONNECTED", 7000)) {
   if (!expectReplyMulti("WIFI CONNECTED", 10)) {
     debugStream->println(F("Wifi connect error"));
     return false;
@@ -335,25 +330,25 @@ void ESP8266EX::closeAP(void) {
   expectReplyMulti("OK");
 }
 
-// Open TCP connection.  Hostname is flash-resident string.
-// Returns true on successful connection, else false.
 boolean ESP8266EX::connectTCP(char *hostname, char *port) {
   if (tcpConnected())
     return true;
 
   debugStream->println(F("\nStarting TCP connection"));
 
-  char tcpCmd[100];
-  sprintf(tcpCmd, "AT+CIPSTART=\"TCP\",\"%s\",%s", hostname, port);
+  print(F("AT+CIPSTART=\"TCP\",\""));
+  print(hostname);
+  print(F("\","));
+  print(port);
+  print(F("\r\n"));
 
-  if (sendCheckReply(tcpCmd, "CONNECT") == false)
-    return false;
-  if (findReply("OK", "ERROR") == false)
+  if (expectReplyMulti("CONNECT") == false)
     return false;
 
   _host = hostname;
   return true;
 }
+
 
 // Close the current TCP connection
 boolean ESP8266EX::closeTCP() {
@@ -396,7 +391,7 @@ boolean ESP8266EX::tcpSendRequest(int bytesToSend) {
 
 // Requests page from currently-open TCP connection
 boolean ESP8266EX::requestURL(char *url) {
-  char tcpRequest[200];
+  char tcpRequest[150];
   char sendCmd[15];
 
   sprintf(tcpRequest, "GET %s HTTP/1.1\r\nHost: %s\r\n\r\n", url, _host);
@@ -442,10 +437,9 @@ void ESP8266EX::setVariablesNames(char *var1, char *var2, char *var3, char *var4
   _ubidotsVar4 = var4;
 }
 
-
 // Send a GET request to Ubidots server
 boolean ESP8266EX::ubidotsGetRequest(char *url, char *auth) {
-  char tcpRequest[200];
+  char tcpRequest[150];
   char sendCmd[15];
 
   sprintf(tcpRequest, "GET %s%s HTTP/1.1\r\nHost: %s\r\n\r\n", url, auth, _host);

@@ -25,8 +25,8 @@
 #define ESP_IPD_TIMEOUT     120000L
 
 #define clearArray(__array) (memset(__array, NULL, sizeof(__array)))
-const int _bufferSize = 512;
-const int _defaultTimeout = 1000;
+const int _bufferSize = 256;
+const int _defaultTimeout = 2000;
 const int _defaultTries = 5;
 
 typedef const __FlashStringHelper Fstr; // PROGMEM/flash-resident string
@@ -98,7 +98,7 @@ class ESP8266EX : public Print {
     virtual size_t write(uint8_t); // Because Print subclass
 
     char *_host;       // Non-NULL when TCP connection
-    char _bootMarker[50]; // String indicating successful boot
+    char _bootMarker[35]; // String indicating successful boot
     char *_ubidotsToken;
     char *_ubidotsUrl;
     char *_ubidotsDevice;
